@@ -1,0 +1,56 @@
+PS D:\DripNoRules\DripNoRules python> cd "D:\DripNoRules\DripNoRules python\calculadora_precios"
+PS D:\DripNoRules\DripNoRules python\calculadora_precios> dir
+>> 
+
+
+    Directorio: D:\DripNoRules\DripNoRules python\calculadora_precios
+
+
+
+Mode                 LastWriteTime         Length Name
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----         15/4/2025     22:45                static
+d-----         15/4/2025     22:45                templates
+----                 -------------         ------ ----
+d-----         15/4/2025     22:45                static
+d-----         15/4/2025     22:45                templates
+-a----         15/4/2025     22:46           2224 app.py
+d-----         15/4/2025     22:45                static
+d-----         15/4/2025     22:45                templates
+-a----         15/4/2025     22:46           2224 app.py
+
+
+-a----         15/4/2025     22:46           2224 app.py
+
+
+
+
+PS D:\DripNoRules\DripNoRules python\calculadora_precios> python app.py
+>>
+ * Serving Flask app 'app'
+PS D:\DripNoRules\DripNoRules python\calculadora_precios> python app.py
+>>
+ * Serving Flask app 'app'
+>>
+ * Serving Flask app 'app'
+ * Debug mode: on
+ * Serving Flask app 'app'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 606-058-516
+ * Debugger PIN: 606-058-516
+127.0.0.1 - - [15/Apr/2025 22:54:17] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [15/Apr/2025 22:54:17] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [15/Apr/2025 22:54:17] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [15/Apr/2025 22:54:17] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [15/Apr/2025 22:56:42] "POST / HTTP/1.1" 200 -

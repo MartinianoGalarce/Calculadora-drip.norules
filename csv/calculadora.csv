@@ -1,0 +1,85 @@
+import csv
+
+def obtener_ganancia_porcentual(precio_usd):
+    if precio_usd < 5:
+        return 0.60
+    elif 5 <= precio_usd < 15:
+        return 0.55
+    elif 15 <= precio_usd < 35:
+        return 0.50
+    elif 35 <= precio_usd < 70:
+        return 0.40
+    else:
+        return 0.30
+
+def calcular_precios(productos, envio_usd, impuesto_ars, dolar_ars):
+    total_precio_usd = sum(p['precio_usd'] for p in productos)
+    total_ganancia = 0
+
+    for producto in productos:
+        proporcion = producto['precio_usd'] / total_precio_usd
+
+        envio_ars = (envio_usd * dolar_ars) * proporcion
+        impuesto_proporcional_ars = impuesto_ars * proporcion
+
+        precio_ars = producto['precio_usd'] * dolar_ars
+        costo_total = precio_ars + envio_ars + impuesto_proporcional_ars
+
+        ganancia_porcentual = obtener_ganancia_porcentual(producto['precio_usd'])
+        ganancia_monetaria = costo_total * ganancia_porcentual
+        precio_final = costo_total + ganancia_monetaria
+
+        producto['ganancia_%'] = ganancia_porcentual * 100
+        producto['ganancia_ars'] = ganancia_monetaria
+        producto['precio_final'] = precio_final
+        producto['costo_sin_ganancia'] = costo_total
+
+        total_ganancia += ganancia_monetaria
+
+    return productos, total_ganancia
+
+# --- Entradas generales ---
+envio_usd = float(input("Costo total de envío (USD): "))
+impuesto_ars = float(input("Impuesto total en pesos argentinos (ARS): "))
+dolar_ars = float(input("Cotización del dólar (USD a ARS): "))
+
+# --- Ingreso de productos ---
+productos = []
+
+while True:
+    nombre = input("Nombre del producto (o 'fin' para terminar): ")
+    if nombre.lower() == 'fin':
+        break
+    precio_usd = float(input(f"Precio en USD de '{nombre}': "))
+    productos.append({"nombre": nombre, "precio_usd": precio_usd})
+
+# --- Cálculo ---
+productos_calculados, total_ganancia = calcular_precios(productos, envio_usd, impuesto_ars, dolar_ars)
+
+# --- Resultados en consola ---
+print("\n--- Resultados por producto ---")
+for p in productos_calculados:
+    print(f"Producto: {p['nombre']}")
+    print(f"  Precio USD: {p['precio_usd']}")
+    print(f"  Costo sin ganancia: ${p['costo_sin_ganancia']:.2f} ARS")
+    print(f"  Ganancia aplicada: {p['ganancia_%']:.0f}% → ${p['ganancia_ars']:.2f} ARS")
+    print(f"  Precio final de venta: ${p['precio_final']:.2f} ARS\n")
+
+print(f"💰 Ganancia total estimada: ${total_ganancia:.2f} ARS")
+
+# --- Guardar en CSV ---
+guardar = input("¿Querés guardar los resultados en un archivo CSV? (s/n): ").lower()
+if guardar == 's':
+    with open("productos_con_precios.csv", mode="w", newline="", encoding="utf-8") as archivo:
+        writer = csv.writer(archivo)
+        writer.writerow(["Nombre", "Precio USD", "Costo sin ganancia (ARS)", "Ganancia %", "Ganancia (ARS)", "Precio final (ARS)"])
+        for p in productos_calculados:
+            writer.writerow([
+                p['nombre'],
+                p['precio_usd'],
+                round(p['costo_sin_ganancia'], 2),
+                f"{p['ganancia_%']}%",
+                round(p['ganancia_ars'], 2),
+                round(p['precio_final'], 2)
+            ])
+    print("✅ Resultados guardados en 'productos_con_precios.csv'")
